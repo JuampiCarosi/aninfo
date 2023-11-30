@@ -23,3 +23,12 @@ def creador_tablero(ruta_archivo):
             fila = []
             i = 0
     return tablero_final
+
+def aniadir_numero(coordenada_ingresada, numero_ingresado, tablero):
+    fila = int(coordenada_ingresada[0]) - 1 #El -1 es porque la coordenada de la posicion 1x1 en la matriz es la posicion 0x0.
+    columna = int(coordenada_ingresada[1]) - 1
+    if tablero[fila][columna]['editable']:
+        tablero[fila][columna]['numero'] = numero_ingresado
+        print(tablero[fila][columna]['numero'])
+    else:
+        print('\nLa coordenada ' + coordenada_ingresada[0] + 'x' + coordenada_ingresada[1] + ' no puede ser modificada')
