@@ -11,6 +11,8 @@ def creador_tablero(ruta_archivo):
     tablero_final = []
     i = 0
     fila = []
+    nro_fila = 1
+    coodenadas_bloqueadas = ()
     for caracter in caracteres:
         if caracter == '?':
             celda = {'numero': caracter, 'editable': True}
@@ -18,28 +20,15 @@ def creador_tablero(ruta_archivo):
             celda = {'numero': caracter, 'editable': False}
         fila.append(celda)
         i += 1
+        if caracter != '?':
+            coordenada = str(nro_fila) + str(i)
+            coodenadas_bloqueadas = coodenadas_bloqueadas + (coordenada,)
         if i == 9:
             tablero_final.append(fila)
+            nro_fila += 1
             fila = []
             i = 0
-    return tablero_final
-
-def mostrar_tablero(tablero):
-    for fila in tablero:
-        for celda in fila:
-            print(celda['numero'], end=' ')
-        print()
-
-def mostrar_tablero_editable(tablero):
-    for fila in tablero:
-        for celda in fila:
-            if celda['editable']:
-                print(celda['numero'], end=' ')
-            else:
-                print('X', end=' ')
-        print()
-
-tablero = creador_tablero(ruta_archivo_set)
-mostrar_tablero(tablero)
-print()
-mostrar_tablero_editable(tablero)
+    devolucion = []
+    devolucion.append(tablero_final)
+    devolucion.append(coodenadas_bloqueadas)
+    return devolucion
