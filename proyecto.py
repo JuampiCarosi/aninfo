@@ -24,7 +24,9 @@ def creador_tablero(ruta_archivo):
             i = 0
     return tablero_final
 
-def aniadir_numero(coordenada_ingresada, numero_ingresado, tablero):
+def aniadir_numero(tablero):
+    coordenada_ingresada = input("Ingrese una coordenada\n(debe ser un numero entre el 11 y el 99 donde el 1er numero es la fila y el 2do la columna): ")
+    numero_ingresado = input("Ingrese un numero entre el 1 y el 9: ")
     if (len(coordenada_ingresada) == 2 and coordenada_ingresada[0].isdigit() and coordenada_ingresada[1].isdigit() and int(coordenada_ingresada[0]) > 0 and int(coordenada_ingresada[1]) > 0):
         fila = int(coordenada_ingresada[0]) - 1 #El -1 es porque la coordenada de la posicion 1x1 en la matriz es la posicion 0x0.
         columna = int(coordenada_ingresada[1]) - 1
@@ -37,3 +39,8 @@ def aniadir_numero(coordenada_ingresada, numero_ingresado, tablero):
             print('\nEl numero ingresado ' + numero_ingresado + ' no es un numero valido.')
     else:
         print('\nLa coordenada ' + coordenada_ingresada + ' no es una coordenada valida.')
+
+tablero = creador_tablero(ruta_archivo_set)
+print(tablero)
+aniadir_numero(tablero)
+print(tablero)
