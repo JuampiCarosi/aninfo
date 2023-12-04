@@ -25,10 +25,15 @@ def creador_tablero(ruta_archivo):
     return tablero_final
 
 def aniadir_numero(coordenada_ingresada, numero_ingresado, tablero):
-    fila = int(coordenada_ingresada[0]) - 1 #El -1 es porque la coordenada de la posicion 1x1 en la matriz es la posicion 0x0.
-    columna = int(coordenada_ingresada[1]) - 1
-    if tablero[fila][columna]['editable']:
-        tablero[fila][columna]['numero'] = numero_ingresado
-        print(tablero[fila][columna]['numero'])
+    if (len(coordenada_ingresada) == 2 and coordenada_ingresada[0].isdigit() and coordenada_ingresada[1].isdigit() and int(coordenada_ingresada[0]) > 0 and int(coordenada_ingresada[1]) > 0):
+        fila = int(coordenada_ingresada[0]) - 1 #El -1 es porque la coordenada de la posicion 1x1 en la matriz es la posicion 0x0.
+        columna = int(coordenada_ingresada[1]) - 1
+        if (numero_ingresado.isdigit() and len(numero_ingresado) == 1 and int(numero_ingresado) > 0):
+            if tablero[fila][columna]['editable']:
+                tablero[fila][columna]['numero'] = numero_ingresado
+            else:
+                print('\nLa coordenada ' + coordenada_ingresada[0] + 'x' + coordenada_ingresada[1] + ' no puede ser modificada.')
+        else:
+            print('\nEl numero ingresado ' + numero_ingresado + ' no es un numero valido.')
     else:
-        print('\nLa coordenada ' + coordenada_ingresada[0] + 'x' + coordenada_ingresada[1] + ' no puede ser modificada')
+        print('\nLa coordenada ' + coordenada_ingresada + ' no es una coordenada valida.')
