@@ -39,8 +39,3 @@ def aniadir_numero(tablero):
             print('\nEl numero ingresado ' + numero_ingresado + ' no es un numero valido.')
     else:
         print('\nLa coordenada ' + coordenada_ingresada + ' no es una coordenada valida.')
-
-tablero = creador_tablero(ruta_archivo_set)
-print(tablero)
-aniadir_numero(tablero)
-print(tablero)
