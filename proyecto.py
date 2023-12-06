@@ -1,4 +1,6 @@
 import random
+import sys
+from termcolor import colored, cprint
 
 ruta_archivo_set = "setsudokus.txt"
 
@@ -24,6 +26,22 @@ def creador_tablero(ruta_archivo):
             i = 0
     return tablero_final
 
+def mostrar_tablero(tablero):
+    i = 0
+    for linea in tablero:
+        for elemento in linea:
+            if  (i%3 == 0) and (i != 0) and (i%9 != 0):
+                print("|  ", end = "")
+            if elemento["editable"] :
+                print(elemento["numero"], end= "  ")
+            else:
+                print(colored(elemento["numero"],'red'), end= "  ")
+            i += 1
+        if i in (27, 54):
+            print("\n" + "-" * 31)
+        else:
+            print("\n") 
+
 def es_opcion_valida(opcion):
     opcion_mayuc = opcion.upper()
     return opcion_mayuc == 'A' or opcion_mayuc == 'B' or opcion_mayuc == 'C' or opcion_mayuc == 'D'
@@ -41,10 +59,3 @@ def pedir_opcion_a_realizar():
         opcion = input("\nIngrese la opción a realizar: ")
     return opcion
 
-#para testear localmente
-def main():
-    mostrar_menu()
-    pedir_opcion_a_realizar()
-
-if __name__ == '__main__':
-    main()
