@@ -39,3 +39,22 @@ def aniadir_numero(tablero):
             print('\nEl numero ingresado ' + numero_ingresado + ' no es un numero valido.')
     else:
         print('\nLa coordenada ' + coordenada_ingresada + ' no es una coordenada valida.')
+
+import sys
+from termcolor import colored, cprint
+
+def mostrar_tablero(tablero):
+    i = 0
+    for linea in tablero:
+        for elemento in linea:
+            if  (i%3 == 0) and (i != 0) and (i%9 != 0):
+                print("|  ", end = "")
+            if elemento["editable"] :
+                print(elemento["numero"], end= "  ")
+            else:
+                print(colored(elemento["numero"],'red'), end= "  ")
+            i += 1
+        if i in (27, 54):
+            print("\n" + "-" * 31)
+        else:
+            print("\n")
