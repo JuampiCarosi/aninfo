@@ -1,4 +1,6 @@
 import random
+import sys
+from termcolor import colored, cprint
 
 ruta_archivo_set = "setsudokus.txt"
 
@@ -40,8 +42,6 @@ def aniadir_numero(tablero):
     else:
         print('\nLa coordenada ' + coordenada_ingresada + ' no es una coordenada valida.')
 
-import sys
-from termcolor import colored, cprint
 
 def mostrar_tablero(tablero):
     i = 0
@@ -57,4 +57,23 @@ def mostrar_tablero(tablero):
         if i in (27, 54):
             print("\n" + "-" * 31)
         else:
-            print("\n")
+            print("\n") 
+
+def es_opcion_valida(opcion):
+    opcion_mayuc = opcion.upper()
+    return opcion_mayuc == 'A' or opcion_mayuc == 'B' or opcion_mayuc == 'C' or opcion_mayuc == 'D'
+
+def mostrar_menu():
+    print("A) Ingresar número")
+    print("B) Pedir una pista")
+    print("C) Limpiar el tablero")
+    print("D) Finalizar juego\n")
+
+def pedir_opcion_a_realizar():
+    opcion = input("Ingrese la opción a realizar: ")
+    while not es_opcion_valida(opcion):
+        print("La opción ingresada no es válida.")
+        opcion = input("\nIngrese la opción a realizar: ")
+    return opcion
+
+
