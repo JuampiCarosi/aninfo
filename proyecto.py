@@ -1,6 +1,7 @@
 import random
 import sys
 from termcolor import colored, cprint
+from validador import tiene_repeticiones
 
 ruta_archivo_set = "setsudokus.txt"
 pistas_restantes = 3
@@ -101,9 +102,6 @@ def dar_pista(tablero):
         print("No quedan pistas disponibles.")
         return
 
-    tiene_repeticiones = tiene_repeticiones(tablero)
-    if tiene_repeticiones:
-        print("Hay numeros incorrectos.")
-    else:
-        print("Todos los numeros ingresados son correctos.")
+    tiene_repeticiones(tablero)
     pistas_restantes -= 1
+    print(f"Pistas restantes: {pistas_restantes}")
