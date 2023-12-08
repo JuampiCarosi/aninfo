@@ -76,4 +76,8 @@ def pedir_opcion_a_realizar():
         opcion = input("\nIngrese la opción a realizar: ")
     return opcion
 
-
+def limpiar_tablero(tablero):
+    for linea in tablero:
+        for celda in linea:
+            if celda['editable']:
+                celda['numero'] = '?'
