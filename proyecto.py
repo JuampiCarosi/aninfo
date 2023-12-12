@@ -1,11 +1,8 @@
 import random
-import sys
-from termcolor import colored, cprint
-from validador import tiene_repeticiones, validar_rango_numero
+from termcolor import colored
+from validador import tiene_repeticiones, validar_rango_numero, sudoku_esta_lleno
 import os
-import time
 
-ruta_archivo_set = "setsudokus.txt"
 pistas_restantes = 3
 
 def creador_tablero(ruta_archivo):
@@ -31,7 +28,7 @@ def creador_tablero(ruta_archivo):
     return tablero_final
 
 def elegir_dificultad():
-    print("!Bienvenido a Sudoku!")
+    print("¡Bienvenido a Sudoku!")
     print("Para iniciar el juego, por favor elija la dificultad")
     print("1) Facil")
     print("2) Normal")
@@ -40,12 +37,16 @@ def elegir_dificultad():
     
     while(not validar_rango_numero(opcion, 1, 3)):
         opcion = input(", por favor, intenta de nuevo: ")
+
     if opcion == '1':
         print("\nHas seleccionado la dificultad Facil. A continuación se muestra el sudoku a resolver:\n")
+        return "setsudokus/set_facil.txt"
     elif opcion == '2':
         print("\nHas seleccionado la dificultad Normal. A continuación se muestra el sudoku a resolver:\n")
+        return "setsudokus/set_medio.txt"
     elif opcion == '3':
         print("\nHas seleccionado la dificultad Dificil. A continuación se muestra el sudoku a resolver:\n")
+        return "setsudokus/set_dificil.txt"
 
 def mostrar_tablero(tablero):
     i = 0
@@ -82,7 +83,7 @@ def elegir_opcion_menu(sudoku):
     elif opcion == '3':
         limpiar_tablero(sudoku)
     elif opcion == '4':
-        finalizar()
+        finalizar(sudoku)
         return False
     return True
 
@@ -104,10 +105,11 @@ def agregar_numero(tablero):
 
 def dar_pista(tablero):
     global pistas_restantes
+
     if pistas_restantes <= 0:
         print("No quedan pistas disponibles.")
         return
-
+    
     tiene_repeticiones(tablero)
     pistas_restantes -= 1
     print(f"Pistas restantes: {pistas_restantes}")
@@ -118,16 +120,23 @@ def limpiar_tablero(tablero):
             if celda['editable']:
                 celda['numero'] = '?'
 
-def finalizar():
-    print("!Muchas gracias por jugar a Sudoku!")
+def finalizar(sudoku):
+    if not tiene_repeticiones(sudoku) and sudoku_esta_lleno(sudoku):
+        print("¡Felicitaciones! Has completado el sudoku correctamente.\n")
+    else:
+        print("¡Lo sentimos! El sudoku es incorrecto.\n")
+    print("¡Muchas gracias por jugar a Sudoku!")
 
-clear = lambda: os.system('cls')
+def main():
+    clear = lambda: os.system('cls')
+    clear()
+    ruta_archivo_set = elegir_dificultad()
+    sudoku = creador_tablero(ruta_archivo_set)
 
-clear()
-sudoku = creador_tablero(ruta_archivo_set)
-elegir_dificultad()
+    condicion = True
+    while(condicion):
+        mostrar_tablero(sudoku)
+        condicion = elegir_opcion_menu(sudoku)
 
-condicion = True
-while(condicion):
-    mostrar_tablero(sudoku)
-    condicion = elegir_opcion_menu(sudoku)
+if __name__ == "__main__":
+    main()

@@ -72,3 +72,10 @@ def tiene_repeticiones(sudoku):
     rep_col = repite_columnas(sudoku)
     rep_cuad = repite_cuadrados(sudoku)
     return rep_fil or rep_col or rep_cuad
+
+def sudoku_esta_lleno(sudoku):
+    for fila in sudoku:
+        for celda in fila:
+            if(celda['numero'] == IDENTIFICADOR_CELDA_VACIA):
+                return False
+    return True
