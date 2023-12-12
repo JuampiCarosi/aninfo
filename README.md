@@ -11,7 +11,7 @@ Para correr el juego en primero lugar se debe clonar el repositorio:
 ```
 git clone https://github.com/JuampiCarosi/aninfo sudoku
 ```
-y luego instalar la dependencia de termcolor:
+Instalar la dependencia de termcolor:
 ```
 pip3 install termcolor
 ```
