@@ -1,11 +1,12 @@
 import random
 import sys
 from termcolor import colored, cprint
-from validador import tiene_repeticiones
+from validador import tiene_repeticiones, validar_rango_numero
+import os
+import time
 
 ruta_archivo_set = "setsudokus.txt"
 pistas_restantes = 3
-
 
 def creador_tablero(ruta_archivo):
     archivo = open(ruta_archivo, 'r')
@@ -29,10 +30,64 @@ def creador_tablero(ruta_archivo):
             i = 0
     return tablero_final
 
+def elegir_dificultad():
+    print("!Bienvenido a Sudoku!")
+    print("Para iniciar el juego, por favor elija la dificultad")
+    print("1) Facil")
+    print("2) Normal")
+    print("3) Dificil\n")
+    opcion = input("Ingrese la dificultad elegida: ")
+    
+    while(not validar_rango_numero(opcion, 1, 3)):
+        opcion = input(", por favor, intenta de nuevo: ")
+    if opcion == '1':
+        print("\nHas seleccionado la dificultad Facil. A continuación se muestra el sudoku a resolver:\n")
+    elif opcion == '2':
+        print("\nHas seleccionado la dificultad Normal. A continuación se muestra el sudoku a resolver:\n")
+    elif opcion == '3':
+        print("\nHas seleccionado la dificultad Dificil. A continuación se muestra el sudoku a resolver:\n")
 
-def aniadir_numero(tablero):
-    coordenada_ingresada = input(
-        "Ingrese una coordenada\n(debe ser un numero entre el 11 y el 99 donde el 1er numero es la fila y el 2do la columna): ")
+def mostrar_tablero(tablero):
+    i = 0
+    print(colored("    1 2 3   4 5 6   7 8 9", 'blue'))
+    for linea in tablero:
+        print(colored(int(i/9 + 1), 'blue') + " | ", end="")
+        for elemento in linea:
+            if  (i%3 == 0) and (i != 0) and (i%9 != 0):
+                print("| ", end = "")
+            if elemento["editable"] :
+                print(elemento["numero"], end= " ")
+            else:
+                print(colored(elemento["numero"],'red'), end= " ")
+            i += 1
+        if i in (27, 54):
+            print("\n   " + "-" * 22)
+        else:
+            print("") 
+
+def elegir_opcion_menu(sudoku):
+    print("\n1) Ingresar número")
+    print("2) Pedir una pista")
+    print("3) Limpiar el tablero")
+    print("4) Finalizar juego\n")
+    opcion = input("Ingrese la opcion elegida: ")
+    
+    while(not validar_rango_numero(opcion, 1, 4)):
+        opcion = input(", por favor, intenta de nuevo: ")
+
+    if opcion == '1':
+        agregar_numero(sudoku)
+    elif opcion == '2':
+        dar_pista(sudoku)
+    elif opcion == '3':
+        limpiar_tablero(sudoku)
+    elif opcion == '4':
+        finalizar()
+        return False
+    return True
+
+def agregar_numero(tablero):
+    coordenada_ingresada = input("Ingrese una coordenada\n(debe ser un numero entre el 11 y el 99 donde el 1er numero es la fila y el 2do la columna): ")
     numero_ingresado = input("Ingrese un numero entre el 1 y el 9: ")
     if (len(coordenada_ingresada) == 2 and coordenada_ingresada[0].isdigit() and coordenada_ingresada[1].isdigit() and int(coordenada_ingresada[0]) > 0 and int(coordenada_ingresada[1]) > 0):
         # El -1 es porque la coordenada de la posicion 1x1 en la matriz es la posicion 0x0.
@@ -51,57 +106,31 @@ def aniadir_numero(tablero):
         print('\nLa coordenada ' + coordenada_ingresada +
               ' no es una coordenada valida.')
 
-
-def mostrar_tablero(tablero):
-    i = 0
-    for linea in tablero:
-        for elemento in linea:
-            if (i % 3 == 0) and (i != 0) and (i % 9 != 0):
-                print("|  ", end="")
-            if elemento["editable"]:
-                print(elemento["numero"], end="  ")
-            else:
-                print(colored(elemento["numero"], 'red'), end="  ")
-            i += 1
-        if i in (27, 54):
-            print("\n" + "-" * 31)
-        else:
-            print("\n")
-
-
-def es_opcion_valida(opcion):
-    opcion_mayuc = opcion.upper()
-    return opcion_mayuc == 'A' or opcion_mayuc == 'B' or opcion_mayuc == 'C' or opcion_mayuc == 'D'
-
-
-def mostrar_menu():
-    print("A) Ingresar número")
-    print("B) Pedir una pista")
-    print("C) Limpiar el tablero")
-    print("D) Finalizar juego\n")
-
-
-def pedir_opcion_a_realizar():
-    opcion = input("Ingrese la opción a realizar: ")
-    while not es_opcion_valida(opcion):
-        print("La opción ingresada no es válida.")
-        opcion = input("\nIngrese la opción a realizar: ")
-    return opcion
-
+def dar_pista(tablero):
+    global pistas_restantes
+    if pistas_restantes <= 0:
+        print("No quedan pistas disponibles.")
+        return
+    tiene_repeticiones(tablero)
+    pistas_restantes -= 1
+    print(f"Pistas restantes: {pistas_restantes}")
 
 def limpiar_tablero(tablero):
     for linea in tablero:
         for celda in linea:
             if celda['editable']:
                 celda['numero'] = '?'
+                
+def finalizar():
+    print("!Muchas gracias por jugar a Sudoku!")
 
+clear = lambda: os.system('cls')
 
-def dar_pista(tablero):
-    global pistas_restantes
-    if pistas_restantes <= 0:
-        print("No quedan pistas disponibles.")
-        return
+clear()
+sudoku = creador_tablero(ruta_archivo_set)
+elegir_dificultad()
 
-    tiene_repeticiones(tablero)
-    pistas_restantes -= 1
-    print(f"Pistas restantes: {pistas_restantes}")
+condicion = True
+while(condicion):
+    mostrar_tablero(sudoku)
+    condicion = elegir_opcion_menu(sudoku)
