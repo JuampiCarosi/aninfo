@@ -74,7 +74,7 @@ def elegir_opcion_menu(sudoku):
     
     while(not validar_rango_numero(opcion, 1, 4)):
         opcion = input(", por favor, intenta de nuevo: ")
-
+        
     if opcion == '1':
         agregar_numero(sudoku)
     elif opcion == '2':
@@ -82,7 +82,7 @@ def elegir_opcion_menu(sudoku):
     elif opcion == '3':
         limpiar_tablero(sudoku)
     elif opcion == '4':
-        finalizar()
+        finalizar_juego(sudoku)
         return False
     return True
 
@@ -120,10 +120,20 @@ def limpiar_tablero(tablero):
         for celda in linea:
             if celda['editable']:
                 celda['numero'] = '?'
-                
-def finalizar():
-    print("!Muchas gracias por jugar a Sudoku!")
 
+def esta_lleno(tablero):
+    for linea in tablero:
+        for celda in linea:
+            if celda['numero'] == '?':
+                return False
+    return True
+
+def finalizar_juego(tablero):
+    if not tiene_repeticiones(tablero) and esta_lleno(tablero):
+        print("Felicitaciones, has ganado!")
+    else:
+        print("Has perdido, mejor suerte la próxima vez.")
+                
 clear = lambda: os.system('cls')
 
 clear()
