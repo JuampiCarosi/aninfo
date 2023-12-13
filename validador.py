@@ -4,6 +4,18 @@ CANTIDAD_FILAS_CUADRADO = 3
 CANTIDAD_COLUMNAS_CUADRADO = 3
 IDENTIFICADOR_CELDA_VACIA = '?'
 
+def validar_rango_numero(input, min, max):
+    esValido = False
+    if(input.isdigit()):
+        numero = int(input)
+        if(min <= numero <= max):
+            esValido = True
+        else:
+            print("El numero ingresado no esta dentro del rango", end="")
+    else:
+        print("No ingresaste un numero", end="")
+    return esValido
+
 def repite_numeros(celdas):
     numeros_vistos = set()
     for celda in celdas:
