@@ -112,9 +112,13 @@ def dar_pista(tablero):
     if pistas_restantes <= 0:
         print("No quedan pistas disponibles.")
         return
-    tiene_repeticiones(tablero)
-    pistas_restantes -= 1
-    print(f"Pistas restantes: {pistas_restantes}")
+    
+    if tiene_repeticiones(tablero):
+        pistas_restantes -= 1
+    else:
+        print("El sudoku no tiene repeticiones.")
+    
+    print(f"Pistas restantes: {pistas_restantes}\n")
 
 def limpiar_tablero(tablero):
     for linea in tablero:
