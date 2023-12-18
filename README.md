@@ -17,7 +17,7 @@ pip3 install termcolor
 ```
 Y luego entrar a la carpeta y ejecutar el programa principal:
 ```
-cd sudoku && python3 sudoku.py
+cd sudoku && python3 proyecto.py
 ```
 ## ¿Cómo jugar?
 Primero, el jugador deberá elegir la dificultad deseada mediante un número del 1 al 3, siendo 1 la dificultad más fácil, 2 la media y 3 la más difícil. Luego, se le mostrara el tablero con algunos números iniciales y se le brindara ciertas opciones para realizar.
