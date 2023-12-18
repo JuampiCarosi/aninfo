@@ -6,6 +6,11 @@ Es una simple app para jugar al Sudoku con una simple interfaz via cli.
 - [Python](https://www.python.org/downloads/)
 - [termcolor](https://pypi.org/project/termcolor/)
 
+## Instalacion de tecnologias
+
+1. Como el juego está hecho con Python va a ser necesario que tengas Python descargado, se puede descargar desde acá: https://www.python.org/downloads/
+2. Se va a tener que agregar Python a la variable de entorno PATH, en este link se explica como hacerlo: https://realpython.com/add-python-to-path/
+
 ## ¿Cómo correr el programa?
 Para correr el juego en primero lugar se debe clonar el repositorio:
 ```
@@ -15,10 +20,14 @@ Instalar la dependencia de termcolor:
 ```
 pip3 install termcolor
 ```
-Y luego entrar a la carpeta y ejecutar el programa principal:
+Una vez posicionados en la carpeta principal 'aninfo', ejecutar el juego:
 ```
-cd sudoku && python3 proyecto.py
+python3 proyecto.py
 ```
+## Instrucciones del Sudoku
+
+El sudoku clásico consiste en una matriz de 9×9 dividido en submatrices de 3×3 en el que hay que colocar los números del uno al nueve dentro de las casillas sin repetir ninguno. El objetivo es colocar los números que falten en esas casillas sin que en ninguno de esos tres casos se repitan.
+
 ## ¿Cómo jugar?
 Primero, el jugador deberá elegir la dificultad deseada mediante un número del 1 al 3, siendo 1 la dificultad más fácil, 2 la media y 3 la más difícil. Luego, se le mostrara el tablero con algunos números iniciales y se le brindara ciertas opciones para realizar.
 - **1**: Ingresar un numero en una celda.
@@ -30,7 +39,7 @@ Primero, el jugador deberá elegir la dificultad deseada mediante un número del
 El formato es muy simple, se debe ingresar un numero de dos dígitos, siendo el primero el numero de la fila y el segundo el numero de la columna. Luego, se pedirá el número que se desea ingresar en la celda. Por ejemplo, si se desea ingresar el número 5 en la celda de la fila 1 y columna 2, se deberá ingresar el numero 12 primero y luego el 5. Solo se podrán ingresar números del 1 al 9 y no se podrán ingresar números en celdas que estén coloreadas de rojo.
 
 ### Pedir una pista
-El jugador contara con un total de 3 pistas. Al pedir una pista, se verificará que el camino que este tomando el usuario sea correcto, o sea, que no tenga números repetidos en la misma fila, columna o cuadrante. Haya números repetidos o no, se le restara una pista al jugador. Si el jugador no tiene más pistas, se le informara que no puede pedir más pistas.
+El jugador contara con un total de 3 pistas. La pista consiste en verificar que el camino que este tomando el usuario sea correcto, o sea, que no tenga números repetidos en la misma fila, columna o cuadrante. Haya números repetidos o no, se le restara una pista al jugador. Si el jugador no tiene más pistas, se le informara que no puede pedir más pistas.
 
 ### Limpiar el tablero
 Esta opción permite al jugador limpiar el tablero y empezar de nuevo.
