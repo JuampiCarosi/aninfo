@@ -32,10 +32,11 @@ def elegir_dificultad():
     print("Para iniciar el juego, por favor elija la dificultad")
     print("1) Facil")
     print("2) Normal")
-    print("3) Dificil\n")
+    print("3) Dificil")
+    print("4) Salir\n")
     opcion = input("Ingrese la dificultad elegida: ")
     
-    while(not validar_rango_numero(opcion, 1, 3)):
+    while(not validar_rango_numero(opcion, 1, 4)):
         opcion = input(", por favor, intenta de nuevo: ")
 
     if opcion == '1':
@@ -47,6 +48,9 @@ def elegir_dificultad():
     elif opcion == '3':
         print("\nHas seleccionado la dificultad Dificil. A continuación se muestra el sudoku a resolver:\n")
         return "setsudokus/set_dificil.txt"
+    elif opcion == '4':
+        print("\n¡Muchas gracias por jugar a Sudoku!")
+        return None
 
 def mostrar_tablero(tablero):
     i = 0
@@ -137,6 +141,8 @@ def main():
     clear = lambda: os.system('cls')
     clear()
     ruta_archivo_set = elegir_dificultad()
+    if ruta_archivo_set == None:
+        return
     sudoku = creador_tablero(ruta_archivo_set)
     condicion = True
     while(condicion):
