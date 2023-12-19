@@ -88,24 +88,28 @@ def elegir_opcion_menu(sudoku):
     return True
 
 def agregar_numero(tablero):
-    coordenada_ingresada = input("Ingrese una coordenada\n(debe ser un numero entre el 11 y el 99 donde el 1er numero es la fila y el 2do la columna): ")
-    numero_ingresado = input("Ingrese un numero entre el 1 y el 9: ")
-    if (len(coordenada_ingresada) == 2 and coordenada_ingresada[0].isdigit() and coordenada_ingresada[1].isdigit() and int(coordenada_ingresada[0]) > 0 and int(coordenada_ingresada[1]) > 0):
-        # El -1 es porque la coordenada de la posicion 1x1 en la matriz es la posicion 0x0.
-        fila = int(coordenada_ingresada[0]) - 1
-        columna = int(coordenada_ingresada[1]) - 1
-        if (numero_ingresado.isdigit() and len(numero_ingresado) == 1 and int(numero_ingresado) > 0):
-            if tablero[fila][columna]['editable']:
-                tablero[fila][columna]['numero'] = numero_ingresado
-            else:
-                print('\nLa coordenada ' +
-                      coordenada_ingresada[0] + 'x' + coordenada_ingresada[1] + ' no puede ser modificada.')
+    while True:
+        coordenada_ingresada = input("Ingrese una coordenada\n(debe ser un numero entre el 11 y el 99 donde el 1er numero es la fila y el 2do la columna): ")
+        if (len(coordenada_ingresada) == 2 and coordenada_ingresada[0].isdigit() and coordenada_ingresada[1].isdigit() and int(coordenada_ingresada[0]) > 0 and int(coordenada_ingresada[1]) > 0):
+            break
         else:
-            print('\nEl numero ingresado ' +
-                  numero_ingresado + ' no es un numero valido.')
+            print("La coordenada ingresada no es valida, por favor intenta de nuevo.")
+
+    while True:
+        numero_ingresado = input("Ingrese un numero entre el 1 y el 9: ")
+        if (numero_ingresado.isdigit() and len(numero_ingresado) == 1 and int(numero_ingresado) > 0):
+            break
+        else:
+            print("El numero ingresado no es valido, por favor intenta de nuevo.")
+
+    # El -1 es porque la coordenada de la posicion 1x1 en la matriz es la posicion 0x0.
+    fila = int(coordenada_ingresada[0]) - 1
+    columna = int(coordenada_ingresada[1]) - 1
+    if tablero[fila][columna]['editable']:
+            tablero[fila][columna]['numero'] = numero_ingresado
     else:
-        print('\nLa coordenada ' + coordenada_ingresada +
-              ' no es una coordenada valida.')
+        print('\nLa coordenada ' +
+                coordenada_ingresada[0] + 'x' + coordenada_ingresada[1] + ' no puede ser modificada.')  
 
 def dar_pista(tablero):
     global pistas_restantes
