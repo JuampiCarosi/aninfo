@@ -1,7 +1,7 @@
 import random
 from termcolor import colored
 from validador import tiene_repeticiones, validar_rango_numero, sudoku_esta_lleno
-import os
+from utils import clear_screen
 
 pistas_restantes = 3
 
@@ -85,6 +85,7 @@ def elegir_opcion_menu(sudoku):
     elif opcion == '4':
         finalizar(sudoku)
         return False
+    
     return True
 
 def agregar_numero(tablero):
@@ -96,23 +97,29 @@ def agregar_numero(tablero):
         columna = int(coordenada_ingresada[1]) - 1
         if (numero_ingresado.isdigit() and len(numero_ingresado) == 1 and int(numero_ingresado) > 0):
             if tablero[fila][columna]['editable']:
+                clear_screen()
                 tablero[fila][columna]['numero'] = numero_ingresado
             else:
+                clear_screen()
                 print('\nLa coordenada ' +
                       coordenada_ingresada[0] + 'x' + coordenada_ingresada[1] + ' no puede ser modificada.')
         else:
+            clear_screen()
             print('\nEl numero ingresado ' +
                   numero_ingresado + ' no es un numero valido.')
     else:
+        clear_screen()
         print('\nLa coordenada ' + coordenada_ingresada +
               ' no es una coordenada valida.')
 
 def dar_pista(tablero):
     global pistas_restantes
     if pistas_restantes <= 0:
+        clear_screen()
         print("No quedan pistas disponibles.")
         return
     
+    clear_screen()
     if tiene_repeticiones(tablero):
         pistas_restantes -= 1
     else:
@@ -125,6 +132,7 @@ def limpiar_tablero(tablero):
         for celda in linea:
             if celda['editable']:
                 celda['numero'] = '?'
+    clear_screen()
 
 def finalizar(sudoku):
     if not tiene_repeticiones(sudoku) and sudoku_esta_lleno(sudoku):
@@ -134,12 +142,13 @@ def finalizar(sudoku):
     print("¡Muchas gracias por jugar a Sudoku!")
 
 def main():
-    clear = lambda: os.system('cls')
-    clear()
+    clear_screen()
     ruta_archivo_set = elegir_dificultad()
+    clear_screen()
     sudoku = creador_tablero(ruta_archivo_set)
     condicion = True
     while(condicion):
+        
         mostrar_tablero(sudoku)
         condicion = elegir_opcion_menu(sudoku)
 
